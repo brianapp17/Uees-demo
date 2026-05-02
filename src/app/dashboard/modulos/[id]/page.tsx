@@ -46,7 +46,7 @@ export default function GestionMateriasPage() {
       const { data: modData, error: modError } = await supabase
         .from('modulos')
         .select('*')
-        .eq('id', id)
+        .eq('id', id as string)
         .single();
         
       if (modError) throw modError;
@@ -56,7 +56,7 @@ export default function GestionMateriasPage() {
       const { data: clsData, error: clsError } = await supabase
         .from('clases')
         .select('*')
-        .eq('modulo_id', id)
+        .eq('modulo_id', id as string)
         .order('dia_semana', { ascending: true }) // Very basic ordering, could be improved with custom order
         .order('hora_inicio', { ascending: true });
         

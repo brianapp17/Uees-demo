@@ -1,1 +1,375 @@
-{"types":"export type Json =\n  | string\n  | number\n  | boolean\n  | null\n  | { [key: string]: Json | undefined }\n  | Json[]\n\nexport type Database = {\n  // Allows to automatically instantiate createClient with right options\n  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)\n  __InternalSupabase: {\n    PostgrestVersion: \"14.5\"\n  }\n  public: {\n    Tables: {\n      alumnos: {\n        Row: {\n          ciclo_actual: string | null\n          id: string\n          profile_id: string | null\n        }\n        Insert: {\n          ciclo_actual?: string | null\n          id?: string\n          profile_id?: string | null\n        }\n        Update: {\n          ciclo_actual?: string | null\n          id?: string\n          profile_id?: string | null\n        }\n        Relationships: [\n          {\n            foreignKeyName: \"alumnos_profile_id_fkey\"\n            columns: [\"profile_id\"]\n            isOneToOne: true\n            referencedRelation: \"profiles\"\n            referencedColumns: [\"id\"]\n          },\n        ]\n      }\n      clases: {\n        Row: {\n          contenido: string | null\n          descripcion: string | null\n          dia_semana: string | null\n          enlace_clase: string | null\n          fecha: string | null\n          hora_fin: string | null\n          hora_inicio: string | null\n          id: string\n          modulo_id: string | null\n          titulo: string\n        }\n        Insert: {\n          contenido?: string | null\n          descripcion?: string | null\n          dia_semana?: string | null\n          enlace_clase?: string | null\n          fecha?: string | null\n          hora_fin?: string | null\n          hora_inicio?: string | null\n          id?: string\n          modulo_id?: string | null\n          titulo: string\n        }\n        Update: {\n          contenido?: string | null\n          descripcion?: string | null\n          dia_semana?: string | null\n          enlace_clase?: string | null\n          fecha?: string | null\n          hora_fin?: string | null\n          hora_inicio?: string | null\n          id?: string\n          modulo_id?: string | null\n          titulo?: string\n        }\n        Relationships: [\n          {\n            foreignKeyName: \"clases_modulo_id_fkey\"\n            columns: [\"modulo_id\"]\n            isOneToOne: false\n            referencedRelation: \"modulos\"\n            referencedColumns: [\"id\"]\n          },\n        ]\n      }\n      docentes: {\n        Row: {\n          aprobado: boolean | null\n          especialidad: string | null\n          id: string\n          profile_id: string | null\n        }\n        Insert: {\n          aprobado?: boolean | null\n          especialidad?: string | null\n          id?: string\n          profile_id?: string | null\n        }\n        Update: {\n          aprobado?: boolean | null\n          especialidad?: string | null\n          id?: string\n          profile_id?: string | null\n        }\n        Relationships: [\n          {\n            foreignKeyName: \"docentes_profile_id_fkey\"\n            columns: [\"profile_id\"]\n            isOneToOne: true\n            referencedRelation: \"profiles\"\n            referencedColumns: [\"id\"]\n          },\n        ]\n      }\n      inscripciones: {\n        Row: {\n          alumno_id: string | null\n          fecha_inscripcion: string | null\n          id: string\n          modulo_id: string | null\n        }\n        Insert: {\n          alumno_id?: string | null\n          fecha_inscripcion?: string | null\n          id?: string\n          modulo_id?: string | null\n        }\n        Update: {\n          alumno_id?: string | null\n          fecha_inscripcion?: string | null\n          id?: string\n          modulo_id?: string | null\n        }\n        Relationships: [\n          {\n            foreignKeyName: \"inscripciones_alumno_id_fkey\"\n            columns: [\"alumno_id\"]\n            isOneToOne: false\n            referencedRelation: \"alumnos\"\n            referencedColumns: [\"id\"]\n          },\n          {\n            foreignKeyName: \"inscripciones_modulo_id_fkey\"\n            columns: [\"modulo_id\"]\n            isOneToOne: false\n            referencedRelation: \"modulos\"\n            referencedColumns: [\"id\"]\n          },\n        ]\n      }\n      modulos: {\n        Row: {\n          ciclo: string\n          descripcion: string | null\n          docente_id: string | null\n          fecha_creacion: string | null\n          id: string\n          nombre: string\n        }\n        Insert: {\n          ciclo: string\n          descripcion?: string | null\n          docente_id?: string | null\n          fecha_creacion?: string | null\n          id?: string\n          nombre: string\n        }\n        Update: {\n          ciclo?: string\n          descripcion?: string | null\n          docente_id?: string | null\n          fecha_creacion?: string | null\n          id?: string\n          nombre?: string\n        }\n        Relationships: [\n          {\n            foreignKeyName: \"modulos_docente_id_fkey\"\n            columns: [\"docente_id\"]\n            isOneToOne: false\n            referencedRelation: \"docentes\"\n            referencedColumns: [\"id\"]\n          },\n        ]\n      }\n      profiles: {\n        Row: {\n          apellido: string | null\n          email: string | null\n          fecha_creacion: string | null\n          id: string\n          nombre: string | null\n          rol: Database[\"public\"][\"Enums\"][\"user_role\"]\n        }\n        Insert: {\n          apellido?: string | null\n          email?: string | null\n          fecha_creacion?: string | null\n          id: string\n          nombre?: string | null\n          rol?: Database[\"public\"][\"Enums\"][\"user_role\"]\n        }\n        Update: {\n          apellido?: string | null\n          email?: string | null\n          fecha_creacion?: string | null\n          id?: string\n          nombre?: string | null\n          rol?: Database[\"public\"][\"Enums\"][\"user_role\"]\n        }\n        Relationships: []\n      }\n    }\n    Views: {\n      [_ in never]: never\n    }\n    Functions: {\n      get_available_modulos: {\n        Args: never\n        Returns: {\n          ciclo: string\n          descripcion: string | null\n          docente_id: string | null\n          fecha_creacion: string | null\n          id: string\n          nombre: string\n        }[]\n        SetofOptions: {\n          from: \"*\"\n          to: \"modulos\"\n          isOneToOne: false\n          isSetofReturn: true\n        }\n      }\n      is_admin: { Args: never; Returns: boolean }\n      is_alumno: { Args: never; Returns: boolean }\n      is_docente: { Args: never; Returns: boolean }\n    }\n    Enums: {\n      user_role: \"admin\" | \"docente\" | \"alumno\"\n    }\n    CompositeTypes: {\n      [_ in never]: never\n    }\n  }\n}\n\ntype DatabaseWithoutInternals = Omit<Database, \"__InternalSupabase\">\n\ntype DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, \"public\">]\n\nexport type Tables<\n  DefaultSchemaTableNameOrOptions extends\n    | keyof (DefaultSchema[\"Tables\"] & DefaultSchema[\"Views\"])\n    | { schema: keyof DatabaseWithoutInternals },\n  TableName extends DefaultSchemaTableNameOrOptions extends {\n    schema: keyof DatabaseWithoutInternals\n  }\n    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions[\"schema\"]][\"Tables\"] &\n        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions[\"schema\"]][\"Views\"])\n    : never = never,\n> = DefaultSchemaTableNameOrOptions extends {\n  schema: keyof DatabaseWithoutInternals\n}\n  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions[\"schema\"]][\"Tables\"] &\n      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions[\"schema\"]][\"Views\"])[TableName] extends {\n      Row: infer R\n    }\n    ? R\n    : never\n  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema[\"Tables\"] &\n        DefaultSchema[\"Views\"])\n    ? (DefaultSchema[\"Tables\"] &\n        DefaultSchema[\"Views\"])[DefaultSchemaTableNameOrOptions] extends {\n        Row: infer R\n      }\n      ? R\n      : never\n    : never\n\nexport type TablesInsert<\n  DefaultSchemaTableNameOrOptions extends\n    | keyof DefaultSchema[\"Tables\"]\n    | { schema: keyof DatabaseWithoutInternals },\n  TableName extends DefaultSchemaTableNameOrOptions extends {\n    schema: keyof DatabaseWithoutInternals\n  }\n    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions[\"schema\"]][\"Tables\"]\n    : never = never,\n> = DefaultSchemaTableNameOrOptions extends {\n  schema: keyof DatabaseWithoutInternals\n}\n  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions[\"schema\"]][\"Tables\"][TableName] extends {\n      Insert: infer I\n    }\n    ? I\n    : never\n  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema[\"Tables\"]\n    ? DefaultSchema[\"Tables\"][DefaultSchemaTableNameOrOptions] extends {\n        Insert: infer I\n      }\n      ? I\n      : never\n    : never\n\nexport type TablesUpdate<\n  DefaultSchemaTableNameOrOptions extends\n    | keyof DefaultSchema[\"Tables\"]\n    | { schema: keyof DatabaseWithoutInternals },\n  TableName extends DefaultSchemaTableNameOrOptions extends {\n    schema: keyof DatabaseWithoutInternals\n  }\n    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions[\"schema\"]][\"Tables\"]\n    : never = never,\n> = DefaultSchemaTableNameOrOptions extends {\n  schema: keyof DatabaseWithoutInternals\n}\n  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions[\"schema\"]][\"Tables\"][TableName] extends {\n      Update: infer U\n    }\n    ? U\n    : never\n  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema[\"Tables\"]\n    ? DefaultSchema[\"Tables\"][DefaultSchemaTableNameOrOptions] extends {\n        Update: infer U\n      }\n      ? U\n      : never\n    : never\n\nexport type Enums<\n  DefaultSchemaEnumNameOrOptions extends\n    | keyof DefaultSchema[\"Enums\"]\n    | { schema: keyof DatabaseWithoutInternals },\n  EnumName extends DefaultSchemaEnumNameOrOptions extends {\n    schema: keyof DatabaseWithoutInternals\n  }\n    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions[\"schema\"]][\"Enums\"]\n    : never = never,\n> = DefaultSchemaEnumNameOrOptions extends {\n  schema: keyof DatabaseWithoutInternals\n}\n  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions[\"schema\"]][\"Enums\"][EnumName]\n  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema[\"Enums\"]\n    ? DefaultSchema[\"Enums\"][DefaultSchemaEnumNameOrOptions]\n    : never\n\nexport type CompositeTypes<\n  PublicCompositeTypeNameOrOptions extends\n    | keyof DefaultSchema[\"CompositeTypes\"]\n    | { schema: keyof DatabaseWithoutInternals },\n  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {\n    schema: keyof DatabaseWithoutInternals\n  }\n    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions[\"schema\"]][\"CompositeTypes\"]\n    : never = never,\n> = PublicCompositeTypeNameOrOptions extends {\n  schema: keyof DatabaseWithoutInternals\n}\n  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions[\"schema\"]][\"CompositeTypes\"][CompositeTypeName]\n  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema[\"CompositeTypes\"]\n    ? DefaultSchema[\"CompositeTypes\"][PublicCompositeTypeNameOrOptions]\n    : never\n\nexport const Constants = {\n  public: {\n    Enums: {\n      user_role: [\"admin\", \"docente\", \"alumno\"],\n    },\n  },\n} as const\n"}
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
+
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "14.5"
+  }
+  public: {
+    Tables: {
+      alumnos: {
+        Row: {
+          ciclo_actual: string | null
+          id: string
+          profile_id: string | null
+        }
+        Insert: {
+          ciclo_actual?: string | null
+          id?: string
+          profile_id?: string | null
+        }
+        Update: {
+          ciclo_actual?: string | null
+          id?: string
+          profile_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alumnos_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clases: {
+        Row: {
+          contenido: string | null
+          descripcion: string | null
+          dia_semana: string | null
+          enlace_clase: string | null
+          fecha: string | null
+          hora_fin: string | null
+          hora_inicio: string | null
+          id: string
+          modulo_id: string | null
+          titulo: string
+        }
+        Insert: {
+          contenido?: string | null
+          descripcion?: string | null
+          dia_semana?: string | null
+          enlace_clase?: string | null
+          fecha?: string | null
+          hora_fin?: string | null
+          hora_inicio?: string | null
+          id?: string
+          modulo_id?: string | null
+          titulo: string
+        }
+        Update: {
+          contenido?: string | null
+          descripcion?: string | null
+          dia_semana?: string | null
+          enlace_clase?: string | null
+          fecha?: string | null
+          hora_fin?: string | null
+          hora_inicio?: string | null
+          id?: string
+          modulo_id?: string | null
+          titulo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clases_modulo_id_fkey"
+            columns: ["modulo_id"]
+            isOneToOne: false
+            referencedRelation: "modulos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      docentes: {
+        Row: {
+          aprobado: boolean | null
+          especialidad: string | null
+          id: string
+          profile_id: string | null
+        }
+        Insert: {
+          aprobado?: boolean | null
+          especialidad?: string | null
+          id?: string
+          profile_id?: string | null
+        }
+        Update: {
+          aprobado?: boolean | null
+          especialidad?: string | null
+          id?: string
+          profile_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "docentes_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inscripciones: {
+        Row: {
+          alumno_id: string | null
+          fecha_inscripcion: string | null
+          id: string
+          modulo_id: string | null
+        }
+        Insert: {
+          alumno_id?: string | null
+          fecha_inscripcion?: string | null
+          id?: string
+          modulo_id?: string | null
+        }
+        Update: {
+          alumno_id?: string | null
+          fecha_inscripcion?: string | null
+          id?: string
+          modulo_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inscripciones_alumno_id_fkey"
+            columns: ["alumno_id"]
+            isOneToOne: false
+            referencedRelation: "alumnos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inscripciones_modulo_id_fkey"
+            columns: ["modulo_id"]
+            isOneToOne: false
+            referencedRelation: "modulos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      modulos: {
+        Row: {
+          ciclo: string
+          descripcion: string | null
+          docente_id: string | null
+          fecha_creacion: string | null
+          id: string
+          nombre: string
+        }
+        Insert: {
+          ciclo: string
+          descripcion?: string | null
+          docente_id?: string | null
+          fecha_creacion?: string | null
+          id?: string
+          nombre: string
+        }
+        Update: {
+          ciclo?: string
+          descripcion?: string | null
+          docente_id?: string | null
+          fecha_creacion?: string | null
+          id?: string
+          nombre?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "modulos_docente_id_fkey"
+            columns: ["docente_id"]
+            isOneToOne: false
+            referencedRelation: "docentes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          apellido: string | null
+          email: string | null
+          fecha_creacion: string | null
+          id: string
+          nombre: string | null
+          rol: Database["public"]["Enums"]["user_role"]
+        }
+        Insert: {
+          apellido?: string | null
+          email?: string | null
+          fecha_creacion?: string | null
+          id: string
+          nombre?: string | null
+          rol?: Database["public"]["Enums"]["user_role"]
+        }
+        Update: {
+          apellido?: string | null
+          email?: string | null
+          fecha_creacion?: string | null
+          id?: string
+          nombre?: string | null
+          rol?: Database["public"]["Enums"]["user_role"]
+        }
+        Relationships: []
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      get_available_modulos: {
+        Args: never
+        Returns: {
+          ciclo: string
+          descripcion: string | null
+          docente_id: string | null
+          fecha_creacion: string | null
+          id: string
+          nombre: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "modulos"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      is_admin: { Args: never; Returns: boolean }
+      is_alumno: { Args: never; Returns: boolean }
+      is_docente: { Args: never; Returns: boolean }
+    }
+    Enums: {
+      user_role: "admin" | "docente" | "alumno"
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+}
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {
+      user_role: ["admin", "docente", "alumno"],
+    },
+  },
+} as const
